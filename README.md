@@ -1,2 +1,2 @@
-# jsregex
+# jsRegex
 javascript regular expression
