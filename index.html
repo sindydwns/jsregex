@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>sindydwns regex</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+  function getAllToken(text, regex, groupid)
+  {
+    var match;
+    var matches = new Array();
+    do
+    {
+      match = regex.exec(text);
+      if(match)
+      {
+        matches.push(match[groupid]);
+      }
+    } while(match);
+    return matches;
+  }
+
+  function run()
+  {
+    var ta_text = $('#text');
+    var ta_regex = $('#regex');
+    var ta_format = $('#format');
+
+    var text = ta_text.val();
+    var regex = new RegExp(ta_regex.val(), 'gi');
+    var matches = getAllToken(text, regex, 1);
+    var distinct = matches.filter((item, index) => matches.indexOf(item) === index);
+    console.log(distinct);
+
+    document.getElementById("list").textContent = '';
+    var list = $("#list");
+    distinct.forEach(x => list.append(ta_format.val().format(x)));
+  }
+
+  String.prototype.format = function()
+  {
+    a = this;
+    for (k in arguments) {
+      a = a.replace("{" + k + "}", arguments[k])
+    }
+    return a
+  }
+
+</script>
+</head>
+<body>
+
+<textarea id="regex" rows="3" cols="50">(?:from|join|into)\s+(?<table>[A-Z|0-9|_]\S+)</textarea><br>
+<textarea id="text" rows="10" cols="50">SELECT *
+FROM TB_APPLE A, TB_PEAR P
+WHERE A.id = in (
+  SELECT id
+  FROM TB_BANANA B
+) AND P.id = in (
+  SELECT id
+  FROM TB_GRAPE G
+)
+</textarea></br>
+<textarea id="format" rows="3" cols="50">select * from {0};</br></textarea><br>
+<button type="button" onclick="run()">run</button>
+
+<ol id="list"></ol>
+
+
+
+
+</body></html>
