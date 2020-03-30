@@ -4,36 +4,51 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
-  function getAllToken(text, regex, groupid)
+  $(document).ready(x =>
+  {
+    var select_box = $("#preset");
+    presets.forEach((item, i) =>
+    {
+      select_box.append("<option>" + item.name + "</option>")
+    });
+    set_preset(presets[0].name);
+  })
+
+  function getAllToken(text, regex, useCapture)
   {
     var match;
     var matches = new Array();
     do
     {
       match = regex.exec(text);
-      if(match)
+      if(match && useCapture)
       {
-        matches.push(match[groupid]);
+        for (var i = 1; i < match.length; i++)
+        {
+          matches.push(match[i]);
+        }
+      }
+      if(match && !useCapture)
+      {
+        matches.push(match[0]);
       }
     } while(match);
     return matches;
   }
 
-  function run()
+  function regex_find()
   {
-    var ta_text = $('#text');
-    var ta_regex = $('#regex');
     var ta_format = $('#format');
-
-    var text = ta_text.val();
-    var regex = new RegExp(ta_regex.val(), 'gi');
-    var matches = getAllToken(text, regex, 1);
-    var distinct = matches.filter((item, index) => matches.indexOf(item) === index);
-    console.log(distinct);
-
-    document.getElementById("list").textContent = '';
     var list = $("#list");
-    distinct.forEach(x => list.append(ta_format.val().format(x)));
+    var eof = $("#eof")[0];
+    var es = get_regex();
+
+    list.html('');
+    es.forEach(x => list.append(ta_format.val().format(x)));
+    if(eof.checked)
+    {
+      list.append("</br>eof");
+    }
   }
 
   String.prototype.format = function()
@@ -45,11 +60,54 @@
     return a
   }
 
+  function get_regex()
+  {
+    var ta_text = $('#text');
+    var ta_regex = $('#regex');
+    var ta_flag = $('#flag');
+    var checkbox = $('#capture')[0];
+    var dist = $('#distinct')[0];
+
+    var text = ta_text.val();
+    var regex = new RegExp(ta_regex.val(), ta_flag.val());
+    var matches = getAllToken(text,regex,checkbox.checked ? 1 : 0);
+    var distinct = matches.filter((item, index) => matches.indexOf(item) === index);
+    return dist.checked ? distinct : matches;
+  }
+
+  function set_preset(preset_name)
+  {
+    var preset = presets.find(x => x.name == preset_name);
+
+    if(preset.regex)    $("#regex").val(preset.regex);
+    if(preset.flag)     $("#flag").val(preset.flag);
+    if(preset.text)     $("#text").val(preset.text);
+    if(preset.format)   $("#format").val(preset.format);
+    if(preset.capture)  $("#capture").attr("checked", preset.capture == "true");
+    if(preset.distinct) $("#distinct").attr("checked", preset.distinct == "true");
+    if(preset.eof)      $("#eof").attr("checked", preset.eof == "true");
+  }
+
+  var presets =
+  [
+    {name:"중복 단어 제거", regex:"(\\S+)", flag:"gim", format:"{0}<br>", distinct:"true", eof:"false", text:"단어 단어 중복 제거"}
+  ]
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162190174-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-162190174-1');
 </script>
 </head>
 <body>
 
-<textarea id="regex" rows="3" cols="50">(?:from|join|into)\s+(?<table>[A-Z|0-9|_]\S+)</textarea><br>
+<select id="preset" onchange="javascript:set_preset(this.value)"></select><br>
+<textarea id="regex" rows="3" cols="50">(?:from|join)\s+(?<table>[A-Z|0-9|_]\S+)</textarea><br>
+<textarea id="flag" rows="1" cols="50">gim</textarea><br>
 <textarea id="text" rows="10" cols="50">SELECT *
 FROM TB_APPLE A, TB_PEAR P
 WHERE A.id = in (
@@ -61,7 +119,10 @@ WHERE A.id = in (
 )
 </textarea></br>
 <textarea id="format" rows="3" cols="50">select * from {0};</br></textarea><br>
-<button type="button" onclick="run()">run</button>
+<input type="checkbox" id="capture" checked="true">capture</input>
+<input type="checkbox" id="distinct" checked="true">distinct</input>
+<input type="checkbox" id="eof" checked="false">eof</input></br>
+<button type="button" onclick="regex_find()">find</button>
 
 <ol id="list"></ol>
 
