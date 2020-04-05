@@ -1,8 +1,12 @@
 <html>
 <head>
 <title>sindydwns regex</title>
-<script src="script.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162190174-1"></script>
+<script src="scripts/analytics.js"></script>
+<!-- site tag end -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="scripts/customRegex.js"></script>
 <script>
 
   $(document).ready(x =>
@@ -72,15 +76,7 @@
     {name:"중복 단어 제거", regex:"(\\S+)", flag:"gim", format:"{0}<br>", distinct:"true", eof:"false", text:"단어 단어 중복 제거"}
   ]
 </script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162190174-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-162190174-1');
-</script>
 </head>
 <body>
 <p>정규표현식을 사용하여 원하는 문자열을 찾고 가공합니다.</p>
