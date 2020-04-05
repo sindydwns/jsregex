@@ -13,15 +13,12 @@
   $(document).ready(x =>
   {
     var select_box = $("#preset");
-    presets.forEach((item, i) =>
-    {
-      select_box.append("<option>" + item.name + "</option>")
-    });
     set_preset(presets[0].name);
     $.ajax({
-      url:"./scripts/preset.json",
+      url:"./presets/preset.json",
       success:function(data){
         var presetList = JSON.parse(data);
+        console.log(presetList);
         for(var i in presetList)
         {
           select_box.append("<option>" + presetList[item].name + "</option>")
