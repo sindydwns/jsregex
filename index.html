@@ -21,7 +21,7 @@
         var presetList = JSON.parse(data.trim());
         for(var i in presetList)
         {
-          select_box.append("<option>" + presetList[item].name + "</option>");
+          select_box.append("<option>" + presetList[i].name + "</option>");
         }
       },
       error:function(e){
