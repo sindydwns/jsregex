@@ -17,6 +17,7 @@
     $.ajax({
       url:"./presets/preset.json",
       success:function(data){
+        console.log(data);
         var presetList = JSON.parse(data);
         console.log(presetList);
         for(var i in presetList)
