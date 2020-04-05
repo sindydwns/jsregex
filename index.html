@@ -18,7 +18,7 @@
       url:"./presets/preset.json",
       dataType:"text",
       success:function(data){
-        var presetList = JSON.parse(data);
+        var presetList = JSON.parse(data.trim());
         for(var i in presetList)
         {
           select_box.append("<option>" + presetList[item].name + "</option>")
