@@ -16,7 +16,7 @@
     set_preset(presets[0].name);
     $.ajax({
       url:"./presets/preset.json",
-      dataType:"JSON",
+      dataType:"text",
       success:function(data){
         console.log(data);
         // var presetList = JSON.parse(data);
