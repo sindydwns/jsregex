@@ -7,6 +7,7 @@
 <!-- site tag end -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="scripts/customRegex.js"></script>
+
 <script>
 
   $(document).ready(x =>
@@ -17,11 +18,10 @@
       select_box.append("<option>" + item.name + "</option>")
     });
     set_preset(presets[0].name);
-    fetch("scripts/customRegex.js").then(x => console.log(x));
   })
 
   $.ajax({
-    url:"https://sindydwns.github.io/jsregex/scripts/customRegex.js",
+    url:"./scripts/customRegex.js",
     success:function(data){
       console.log(data);
     }

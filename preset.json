@@ -1,0 +1,11 @@
+{"datas":[
+{
+  "name":"중복 단어 제거",
+  "regex":"(\\S+)",
+  "flag":"gim",
+  "format":"{0}<br>",
+  "distinct":"true",
+  "eof":"false",
+  "text":"단어 단어 중복 제거"
+}
+]}
