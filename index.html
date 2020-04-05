@@ -13,23 +13,42 @@
   $(document).ready(x =>
   {
     var select_box = $("#preset");
-    set_preset(presets[0].name);
     $.ajax({
       url:"./presets/preset.json",
       dataType:"text",
-      success:function(data){
+      success:function(data)
+      {
         var presetList = JSON.parse(data.trim());
         for(var i in presetList)
         {
-          select_box.append("<option>" + presetList[i].name + "</option>");
+          select_box.append("<option value='" + i + "'>" + presetList[i] + "</option>");
         }
+        var k = Object.keys(presetList)[0];
+        changeCombobox(k);
       },
-      error:function(e){
-        console.log("error >> ")
+      error:function(e)
+      {
         console.log(e)
       }
     });
-  })
+  });
+
+  function changeCombobox(file)
+  {
+    $.ajax({
+      url:"./presets/" + file + ".json",
+      dataType:"text",
+      success:function(data)
+      {
+        var preset = JSON.parse(data);
+        set_preset(preset);
+      },
+      error:function(e)
+      {
+        console.log(e);
+      }
+    });
+  }
 
   function regex_find()
   {
@@ -70,10 +89,8 @@
     return dist.checked ? distinct : matches;
   }
 
-  function set_preset(preset_name)
+  function set_preset(preset)
   {
-    var preset = presets.find(x => x.name == preset_name);
-
     if(preset.regex)    $("#regex").val(preset.regex);
     if(preset.flag)     $("#flag").val(preset.flag);
     if(preset.text)     $("#text").val(preset.text);
@@ -82,16 +99,11 @@
     if(preset.distinct) $("#distinct").attr("checked", preset.distinct == "true");
     if(preset.eof)      $("#eof").attr("checked", preset.eof == "true");
   }
-
-  var presets =
-  [
-    {name:"중복 단어 제거", regex:"(\\S+)", flag:"gim", format:"{0}<br>", distinct:"true", eof:"false", text:"단어 단어 중복 제거"}
-  ]
 </script>
 </head>
 <body>
 <p>정규표현식을 사용하여 원하는 문자열을 찾고 가공합니다.</p>
-<select id="preset" onchange="javascript:set_preset(this.value)"></select><br>
+<select id="preset" onchange="javascript:changeCombobox(this.value)"></select><br>
 <textarea id="regex" rows="3" cols="50">(?:from|join)\s+(?<table>[A-Z|0-9|_]\S+)</textarea><br>
 <textarea id="flag" rows="1" cols="50">gim</textarea><br>
 <textarea id="text" rows="10" cols="50">SELECT *
