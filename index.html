@@ -20,6 +20,13 @@
     fetch("scripts/customRegex.js").then(x => console.log(x));
   })
 
+  $.ajax({
+    url:"https://sindydwns.github.io/jsregex/scripts/customRegex.js",
+    success:function(data){
+      console.log(data);
+    }
+  })
+
   function regex_find()
   {
     var ta_format = $('#format');
