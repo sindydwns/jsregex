@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>sindydwns regex</title>
+<script src="script.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
@@ -13,28 +14,6 @@
     });
     set_preset(presets[0].name);
   })
-
-  function getAllToken(text, regex, useCapture)
-  {
-    var match;
-    var matches = new Array();
-    do
-    {
-      match = regex.exec(text);
-      if(match && useCapture)
-      {
-        for (var i = 1; i < match.length; i++)
-        {
-          matches.push(match[i]);
-        }
-      }
-      if(match && !useCapture)
-      {
-        matches.push(match[0]);
-      }
-    } while(match);
-    return matches;
-  }
 
   function regex_find()
   {
