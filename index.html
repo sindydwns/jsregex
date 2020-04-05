@@ -18,12 +18,12 @@
       url:"./presets/preset.json",
       success:function(data){
         console.log(data);
-        var presetList = JSON.parse(data);
-        console.log(presetList);
-        for(var i in presetList)
-        {
-          select_box.append("<option>" + presetList[item].name + "</option>")
-        }
+        // var presetList = JSON.parse(data);
+        // console.log(presetList);
+        // for(var i in presetList)
+        // {
+        //   select_box.append("<option>" + presetList[item].name + "</option>")
+        // }
       }
     });
   })
