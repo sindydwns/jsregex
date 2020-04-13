@@ -1,6 +1,6 @@
 {
   "name":"파일경로 찾기",
-  "regex":"(\\S*\\\\S*\\.\\S*)",
+  "regex":"(\\S*\\\\\\S*\\.\\S*)",
   "flag":"gim",
   "format":"{0}<br>",
   "distinct":"true",
