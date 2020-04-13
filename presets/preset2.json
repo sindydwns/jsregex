@@ -1,9 +1,8 @@
 {
-  "name":"중복 단어 제거 Test",
-  "regex":"(\\S+)",
+  "name":"파일경로 찾기",
+  "regex":"(\\S*\\\\S*\\.\\S*)",
   "flag":"gim",
   "format":"{0}<br>",
   "distinct":"true",
-  "eof":"false",
-  "text":"단어 단어 단어 중복 제거"
+  "eof":"false"
 }

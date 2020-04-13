@@ -4,6 +4,5 @@
   "flag":"gim",
   "format":"{0}<br>",
   "distinct":"true",
-  "eof":"false",
-  "text":"단어 단어 중복 제거"
+  "eof":"false"
 }
